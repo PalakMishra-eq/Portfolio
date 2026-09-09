@@ -5,1298 +5,796 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vCard - Personal Portfolio</title>
+  <title>Palak Mishra — PhD Scholar, IIIT Delhi</title>
 
-  <!--
-    - favicon
-  -->
   <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: hsl(0, 0%, 7%);
+      --bg-panel: hsl(240, 2%, 13%);
+      --bg-panel-2: hsl(240, 2%, 16%);
+      --border: hsla(0, 0%, 100%, 0.08);
+      --border-strong: hsla(0, 0%, 100%, 0.14);
+      --text: hsl(0, 0%, 96%);
+      --text-muted: hsla(0, 0%, 96%, 0.62);
+      --text-faint: hsla(0, 0%, 96%, 0.4);
+      --accent: hsl(45, 90%, 68%);
+      --accent-soft: hsla(45, 90%, 68%, 0.12);
+
+      --font-display: "Fraunces", serif;
+      --font-body: "Poppins", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ---------- SIDEBAR ---------- */
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 56px 44px 40px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-top { flex: 1; }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-strong);
+    }
+
+    .sidebar h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.9rem;
+      margin: 22px 0 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar .role {
+      color: var(--accent);
+      font-size: 0.98rem;
+      font-weight: 500;
+      margin: 0 0 4px;
+    }
+
+    .sidebar .affil {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin: 0 0 26px;
+      max-width: 30ch;
+    }
+
+    .sidebar .blurb {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      max-width: 32ch;
+      margin-bottom: 34px;
+    }
+
+    .sidenav { list-style: none; margin: 0; padding: 0; }
+
+    .sidenav li { margin-bottom: 4px; }
+
+    .sidenav a {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      text-decoration: none;
+      padding: 9px 0;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      color: var(--text-faint);
+      transition: color 0.2s ease;
+    }
+
+    .sidenav a .num {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      min-width: 22px;
+    }
+
+    .sidenav a:hover,
+    .sidenav a:focus-visible,
+    .sidenav a.active { color: var(--text); }
+
+    .sidenav a:hover .num,
+    .sidenav a:focus-visible .num,
+    .sidenav a.active .num { color: var(--accent); }
+
+    .sidebar-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 11px 18px;
+      border-radius: 3px;
+      width: fit-content;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .resume-btn:hover { background: var(--accent-soft); }
+
+    .social-row {
+      display: flex;
+      gap: 18px;
+    }
+
+    .social-row a {
+      color: var(--text-faint);
+      font-size: 1.25rem;
+      display: flex;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .social-row a:hover { color: var(--accent); transform: translateY(-2px); }
+
+    /* ---------- MAIN ---------- */
+
+    .main {
+      padding: 64px 56px 120px;
+      min-width: 0;
+    }
+
+    .intro {
+      max-width: 62ch;
+      margin-bottom: 90px;
+    }
+
+    .intro .kicker {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 0 0 14px;
+    }
+
+    .intro h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      line-height: 1.25;
+      margin: 0;
+      color: var(--text);
+    }
+
+    section.block {
+      max-width: 68ch;
+      padding-top: 8px;
+      margin-bottom: 92px;
+      scroll-margin-top: 48px;
+    }
+
+    .block-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .block-head .idx {
+      font-family: var(--font-display);
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .block-head h3 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.55rem;
+      margin: 0;
+    }
+
+    .block-head::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      transform: translateY(2px);
+    }
+
+    .block p { color: var(--text-muted); font-size: 0.98rem; }
+
+    /* Publications / Experience entries */
+
+    .entry {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .entry:first-of-type { border-top: 1px solid var(--border); }
+
+    .entry .when {
+      color: var(--text-faint);
+      font-size: 0.8rem;
+      padding-top: 3px;
+      white-space: nowrap;
+    }
+
+    .entry .what h4 {
+      margin: 0 0 4px;
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .entry .what .venue {
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin: 0 0 8px;
+    }
+
+    .entry .what p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 620px) {
+      .entry { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    /* Project cards */
+
+    .project-group { margin-bottom: 30px; }
+
+    .project-group h4 {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--text-faint);
+      font-weight: 500;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 620px) {
+      .project-grid { grid-template-columns: 1fr; }
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 20px;
+      background: var(--bg-panel);
+    }
+
+    .project-card h5 {
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .project-card p {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* Skills */
+
+    .skill-group { margin-bottom: 22px; }
+
+    .skill-group h4 {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--text-faint);
+      font-weight: 500;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 3px;
+    }
+
+    /* Simple lists (awards, talks) */
+
+    ul.plain {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul.plain li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+    }
+
+    ul.plain li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    ul.plain li strong { color: var(--text); font-weight: 500; }
+
+    /* Contact / footer */
+
+    .contact-block .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 18px;
+    }
+
+    .contact-item .label {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0 0 6px;
+    }
+
+    .contact-item a, .contact-item address {
+      font-size: 0.94rem;
+      color: var(--text);
+      text-decoration: none;
+      font-style: normal;
+    }
+
+    .contact-item a:hover { color: var(--accent); }
+
+    footer {
+      max-width: 68ch;
+      color: var(--text-faint);
+      font-size: 0.78rem;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 40px 28px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .sidebar-top { display: flex; align-items: center; gap: 18px; flex: unset; }
+      .sidebar h1 { margin: 0; font-size: 1.4rem; }
+      .sidebar .role, .sidebar .affil, .sidebar .blurb { display: none; }
+      .sidenav { display: none; }
+      .sidebar-bottom { flex-direction: row; align-items: center; }
+      .main { padding: 48px 28px 80px; }
+      .intro { margin-bottom: 56px; }
+      section.block { margin-bottom: 64px; }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!--
-    - #MAIN
-  -->
+  <div class="layout">
 
-  <main>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <!--
-      - #SIDEBAR
-    -->
+      <div class="sidebar-top">
 
-    <aside class="sidebar" data-sidebar>
+        <img class="avatar" src="./assets/images/my-avatar.png" alt="Palak Mishra">
 
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Palak Mishra" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Palak Mishra">Palak Mishra</h1>
-
-          <p class="title">PhD Student</p>
+        <div>
+          <h1>Palak Mishra</h1>
+          <p class="role">PhD Scholar, Computer Science &amp; Engg.</p>
+          <p class="affil">NESt Lab · IIIT Delhi</p>
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
+        <p class="blurb">
+          Systems &amp; networks for distributed AI/ML workloads — collective communication,
+          edge-cloud architectures, and transport protocols for HPC/AI.
+        </p>
 
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
+        <nav aria-label="Section navigation">
+          <ul class="sidenav" data-sidenav>
+            <li><a href="#research-interests"><span class="num">01</span> Research Interests</a></li>
+            <li><a href="#publications"><span class="num">02</span> Publications</a></li>
+            <li><a href="#education"><span class="num">03</span> Education</a></li>
+            <li><a href="#experience"><span class="num">04</span> Experience</a></li>
+            <li><a href="#projects"><span class="num">05</span> Projects</a></li>
+            <li><a href="#talks"><span class="num">06</span> Talks &amp; Conferences</a></li>
+            <li><a href="#awards"><span class="num">07</span> Awards &amp; Leadership</a></li>
+            <li><a href="#skills"><span class="num">08</span> Skills &amp; Toolkit</a></li>
+            <li><a href="#contact"><span class="num">09</span> Contact</a></li>
+          </ul>
+        </nav>
 
       </div>
 
-      <div class="sidebar-info_more">
+      <div class="sidebar-bottom">
+        <a class="resume-btn" href="./assets/images/Palak_Mishra_Academic_Resume.pdf" target="_blank" rel="noopener">
+          Download Résumé
+        </a>
 
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="document-text-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Resume</p>
-
-              <a href="./assets/images/Palak_Mishra_Academic_Resume.pdf" target="_blank" rel="noopener" class="contact-link">Download PDF</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:palakm@iiitd.ac.in" class="contact-link">palakm@iiitd.ac.in</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+91 789xxxxxxx" class="contact-link">+91 789xxxxxxx</a>
-            </div>
-
-          </li>
-
-           <!-- <li class="contact-item">
-             <div class="icon-box"><ion-icon name="logo-linkedin"></ion-icon></div>
-              <div class="contact-info">
-                <p class="contact-title">LinkedIn</p>
-                  <a href="https://www.linkedin.com/in/palak-mishra-937716192/" target="_blank" class="contact-link">
-                    Palak Mishra - LinkedIn
-                  </a>
-                  </div>
-              </li>
-
-            <li class="contact-item">
-              <div class="icon-box"><ion-icon name="logo-github"></ion-icon></div>
-              <div class="contact-info">
-              <p class="contact-title">GitHub</p>
-                <a href="https://github.com/PalakMishra-eq" target="_blank" class="contact-link">PalakMishra - Github</a>
-              </div>
-            </li> -->
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">January 17, 2001</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>New Delhi, India</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/palak-mishra-937716192/" class="social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://github.com/PalakMishra-eq" class="social-link">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-
-          <!-- <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li> -->
-
-        </ul>
-
+        <div class="social-row">
+          <a href="mailto:palakm@iiitd.ac.in" aria-label="Email"><ion-icon name="mail-outline"></ion-icon></a>
+          <a href="https://www.linkedin.com/in/palak-mishra-937716192/" target="_blank" rel="noopener" aria-label="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
+          <a href="https://github.com/PalakMishra-eq" target="_blank" rel="noopener" aria-label="GitHub"><ion-icon name="logo-github"></ion-icon></a>
+        </div>
       </div>
 
     </aside>
 
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <!-- <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li> -->
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            I'm a PhD student affiliated to the NESt Lab at Indraprastha Institute of Information Technology, Delhi. My work spans distributed systems,
-    networking for AI/ML workloads, and scalable software solutions.
-          </p>
-
-          <p>
-            And my research interests include
-            Systems and Networks for Distributed AI/ML Workloads, Distributed & High-Performance Systems, Edge–Cloud Architectures,
-            Mixture-of-Experts, Transport Protocols for HPC/AI Applications, 6G edge/RAN inferencing workloads.
-          </p>
-
-          <p>
-            Previously, I worked at Birlasoft and Cognizant, gaining professional experience in full-stack development,
-    and contributed to the Mifos Initiative through Code for GovTech. I specialize in FullStack Development, Linux, Computer Networks, Systems architecture and Operating systems, and distributed systems technologies.
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">PhD Course Work</h4>
-
-                <p class="service-item-text">
-                  As a part of my PhD programme, I am undertaking course work. This includes<b> Graduate Systems</b>,<b> Networks for AIML Systems</b>, <b>Introduction to Graduate Algorithms</b>, <b>Thesis</b>
-                   and <b>IP Project</b> work.
-
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Testing and Benchmarking</h4>
-
-                <p class="service-item-text">
-                  Currently I am working on Collective Communication Libraries including literature survey of NCCL, UCCL, xCCL, MSCCL, TCCL, and others. 
-                  I am testing and benchmarking NCCL primitives, NVLink, and looking into NSight.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">TAship </h4>
-
-                <p class="service-item-text">
-                  Teaching Assistant for Operating Systems course for BTech. Responsibilities include taking Tutorials, Quizzes, Lab exams, Viva and Grading submissions. 
-                </p>
-              </div>
-
-            </li>
-
-             <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Workshop Paper at MemNetAI Sigcomm 2026 </h4>
-
-                <p class="service-item-text">
-                  My short paper got accepted at MemNetAI Workshop at Sigcomm 2026. I am currently working on i's camera ready features.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <!-- <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
-
-                <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
-                </p>
-              </div> -->
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Conferences and Workshops</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <!-- <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure> -->
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Google India Networking Research Summit 2026</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                   The Google India Networking Research Summit is an annual flagship event organized by Google's Networking Research team, hosted in Bangalore. It was an invite-only event for academic researchers and industry professionals. The summit focuses on fostering collaboration and sharing the latest advancements in computer networks, distributed systems, and AI infrastructure.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-            
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <!-- <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure> -->
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>HiPC 2025 Hyderabad</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                   The IEEE 32nd International Conference on High Performance Computing, Data, and Analytics (HiPC 2025) took place in Hyderabad, India, from December 17–20, 2025. It focused on advancing research across scalable high-performance computing, AI/ML integration, and specialized technologies like RISC-V architectures.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <!-- <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure> -->
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>IBM Research Maitreyi 2025</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Maitreyee is IBM Research India’s annual forum designed for celebrating and advancing careers in STEM and to connect, 
-                    inspire, and engage emerging innovators through knowledge sharing, mentorship, and collaborative opportunities.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <!-- <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li> -->
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <div class="intro">
+        <p class="kicker">New Delhi, India</p>
+        <h2>
+          I build and study the systems that move data for large-scale AI —
+          from GPU memory tracing to collective communication at the network layer.
+        </h2>
+      </div>
+
+      <section class="block" id="research-interests">
+        <div class="block-head"><span class="idx">01</span><h3>Research Interests</h3></div>
+        <p>
+          Systems and networks for distributed AI/ML workloads, collective communication
+          performance optimization, edge–cloud architectures, and transport protocols for
+          HPC/AI applications. I'm also interested in Mixture-of-Experts inference and
+          6G edge/RAN inferencing workloads. Previously, I worked in full-stack development
+          at Birlasoft and Cognizant, and contributed to the Mifos Initiative through Code for GovTech.
+        </p>
+      </section>
+
+      <section class="block" id="publications">
+        <div class="block-head"><span class="idx">02</span><h3>Publications</h3></div>
+
+        <div class="entry">
+          <div class="when">2026</div>
+          <div class="what">
+            <h4>Enabling Hardware-Software Co-Design for Large Scale AI Systems via Fine-Grained GPU Memory Tracing</h4>
+            <p class="venue">MemNetAI Workshop @ ACM SIGCOMM, Denver</p>
+            <p>Advised by Dr. Rinku Shah, in collaboration with Marvell Technology.</p>
+          </div>
         </div>
 
-
-        <!--
-          - clients
-        -->
-
-         <section class="clients">
-
-          <!-- <h3 class="h3 clients-title">Clients</h3> -->
-
-          <ul class="clients-list has-scrollbar">
-
-            <!-- <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
-
-          </ul> -->
-
-        </section>
-
-      </article>
- 
-
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
+        <div class="entry">
+          <div class="when">2023</div>
+          <div class="what">
+            <h4>Object Detection Using Convolutional Neural Networks</h4>
+            <p class="venue">IEEE Conference</p>
+            <p>Co-authored with and under the guidance of Dr. J.N. Singh, Galgotias University.</p>
           </div>
+        </div>
+      </section>
 
-          <ol class="timeline-list">
+      <section class="block" id="education">
+        <div class="block-head"><span class="idx">03</span><h3>Education</h3></div>
 
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">PhD, Computer Science Engineering — IIIT Delhi</h4>
-
-              <span>2025 - Present | 9.4 SGPA</span>
-
-              <p class="timeline-text">
-                NESt (Network &amp; Edge Systems) Lab, advised by Dr. Rinku Shah. Research in systems and networks
-                for distributed AI/ML workloads, transport protocols for HPC/AI, and edge-cloud architectures.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">B.Tech, Computer Science &amp; Engineering — Galgotias University</h4>
-
-              <span>2019 - 2023 | 8.2 CGPA</span>
-
-              <p class="timeline-text">
-                Completed a research project on Object Detection using CNNs, co-authored with Dr. J.N. Singh and
-                presented at IEEE Conference (2023).
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Delhi Public School</h4>
-
-              <span>2017-2019</span>
-
-              <p class="timeline-text">
-                Physics, Checmistry, Maths, and Informatics Practices(Java, HTML, CSS, SQL)
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="document-text-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Publications</h3>
+        <div class="entry">
+          <div class="when">2025 – Present</div>
+          <div class="what">
+            <h4>PhD, Computer Science Engineering</h4>
+            <p class="venue">IIIT Delhi · 9.4 SGPA</p>
+            <p>NESt (Network &amp; Edge Systems) Lab, advised by Dr. Rinku Shah.</p>
           </div>
+        </div>
 
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">MemNetAI Workshop @ ACM SIGCOMM</h4>
-
-              <span>2026</span>
-
-              <p class="timeline-text">
-                "Enabling Hardware-Software Co-Design for Large Scale AI Systems via Fine-Grained GPU Memory
-                Tracing." Advised by Dr. Rinku Shah, in collaboration with Marvell Technology. Presented at the
-                MemNetAI workshop, ACM SIGCOMM, Denver 2026.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">IEEE Conference</h4>
-
-              <span>2023</span>
-
-              <p class="timeline-text">
-                "Object Detection Using Convolutional Neural Networks." Co-authored with and under the guidance
-                of Dr. J.N. Singh, Galgotias University.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
+        <div class="entry">
+          <div class="when">2019 – 2023</div>
+          <div class="what">
+            <h4>B.Tech, Computer Science &amp; Engineering</h4>
+            <p class="venue">Galgotias University · 8.2 CGPA</p>
+            <p>Research project on Object Detection using CNNs, presented at IEEE Conference (2023).</p>
           </div>
+        </div>
+      </section>
 
-          <ol class="timeline-list">
+      <section class="block" id="experience">
+        <div class="block-head"><span class="idx">04</span><h3>Experience</h3></div>
 
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Reviewer – MLSys 2026</h4>
-
-              <span>2026</span>
-
-              <p class="timeline-text">
-                Ninth Annual Conference on Machine Learning and Systems (MLSys'26 Artifact Evaluation). Reviewed
-                2 papers and evaluated the attached artifacts on Chameleon testbeds.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Teaching Assistant – Operating Systems, IIIT Delhi</h4>
-
-              <span>Aug 2025 - Dec 2025</span>
-
-              <p class="timeline-text">
-                Graded answer sheets, conducted tutorials, and provided remedial lessons for the Operating
-                Systems course.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Developer – Birlasoft</h4>
-
-              <span>2023 - 2025</span>
-
-              <p class="timeline-text">
-                Worked on scalable backend and data architecture projects as part of the Hewlett Packard team.
-                Designed and optimized RESTful APIs.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Open Source Contributor – The Mifos Initiative (C4GT)</h4>
-
-              <span>2024</span>
-
-              <p class="timeline-text">
-                Developed an Open Banking fintech app using Java Spring Boot and PostgreSQL.
-                Collaborated with global teams across India, UK, and USA.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">.NET Developer – Cognizant</h4>
-
-              <span>2023</span>
-
-              <p class="timeline-text">
-                Built a multithreaded ASP.NET project and served as Cohort Lead, mentoring peers during training.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Summer Intern – IIIT Allahabad</h4>
-
-              <span>2020</span>
-
-              <p class="timeline-text">
-                Worked on ML Decision Tree algorithm design and implementation.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="trophy-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Awards &amp; Achievements</h3>
+        <div class="entry">
+          <div class="when">2026</div>
+          <div class="what">
+            <h4>Reviewer, MLSys 2026</h4>
+            <p class="venue">Ninth Annual Conference on Machine Learning and Systems — Artifact Evaluation</p>
+            <p>Reviewed 2 papers and evaluated the attached artifacts on Chameleon testbeds.</p>
           </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-              <p class="timeline-text">Smart India Hackathon 2022</p>
-            </li>
-
-            <li class="timeline-item">
-              <p class="timeline-text">DSA Certification, NPTEL</p>
-            </li>
-
-            <li class="timeline-item">
-              <p class="timeline-text">CCNA Certification, Cisco</p>
-            </li>
-
-            <li class="timeline-item">
-              <p class="timeline-text">Student Body – Club Head</p>
-            </li>
-
-            <li class="timeline-item">
-              <p class="timeline-text">CAT 86th percentile</p>
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">C, C++, Python, Java, Linux</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Systems Profiling — NCCL, CUDA, CUPTI, NSYS, NCU, eBPF</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Full-Stack Development (Node.js, Spring Boot, ASP.NET)</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Cloud &amp; Tools — Docker, Kubernetes, AWS, GCP, Git</h5>
-                <data value="75">75%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Databases — PostgreSQL, MongoDB, MySQL</h5>
-                <data value="75">75%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <h3 class="h3 testimonials-title">Research Projects</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Network Stack &amp; System Tracing with eBPF</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    On a testbed of 2 RTX GPU laptops and a server with 2 H100 GPUs, executed DDP on ResNet and
-                    profiled the network stack, CPU, and GPU (via function call metadata) with and without
-                    containerisation to measure overhead cost.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Low-Level Decomposition of Collective Primitives</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Comparative study of collective communication libraries including NCCL, MPI collectives, and
-                    optimizations like UCCL. Focused on how NCCL works at a low level using Nsight Compute,
-                    Nsight Systems, and CUPTI. Advised by Dr. Rinku Shah (Aug 2025-Present).
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Inference of MoE</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Investigating optimization techniques for Mixture-of-Experts models on the inference side,
-                    across DeepSeek, Kimi K2, Llama, and Qwen.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Programmable Proxy</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    A network proxy designed to reduce latency in a dynamic network between server and client.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-          </ul>
-
-          <h3 class="h3 testimonials-title" style="margin-top: 40px;">Development Projects</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Full Stack Polling App</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    A platform for enthusiasts to conduct polls, analyse voting patterns, create profiles, and
-                    showcase results customised to chosen fields, with authentication and security features.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Full Stack Note App</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    A TypeScript full-stack application for creating and managing customised notes.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Transaction App</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    A Java Spring Boot app built to work with Mojaloop, developed as part of the Mifos Initiative
-                    open-source project.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Object Recognition App</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    A mobile app for identifying currency and objects, with voice-to-text features for emailing.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-          </ul>
-
-          <p style="margin-top: 20px;">
-            <ion-icon name="logo-github"></ion-icon>
-            See more on <a href="https://github.com/PalakMishra-eq" target="_blank" rel="noopener" class="contact-link">GitHub</a>
-          </p>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7009.717370023728!2d77.27203009999995!3d28.54396699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1758625975204!5m2!1sen!2sin"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="#" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+        </div>
+
+        <div class="entry">
+          <div class="when">Aug – Dec 2025</div>
+          <div class="what">
+            <h4>Teaching Assistant, Operating Systems</h4>
+            <p class="venue">IIIT Delhi</p>
+            <p>Graded answer sheets, ran tutorials, and gave remedial lessons.</p>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="when">2023 – 2025</div>
+          <div class="what">
+            <h4>Developer</h4>
+            <p class="venue">Birlasoft, part of the Hewlett Packard team</p>
+            <p>Scalable backend and data architecture projects; designed and optimized RESTful APIs.</p>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="when">2024</div>
+          <div class="what">
+            <h4>Open Source Contributor</h4>
+            <p class="venue">The Mifos Initiative (Code for GovTech)</p>
+            <p>Built an Open Banking fintech app with Java Spring Boot and PostgreSQL, collaborating with teams across India, the UK, and the US.</p>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="when">2023</div>
+          <div class="what">
+            <h4>.NET Developer</h4>
+            <p class="venue">Cognizant</p>
+            <p>Built a multithreaded ASP.NET project; served as Cohort Lead during training.</p>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="when">2020</div>
+          <div class="what">
+            <h4>Summer Intern</h4>
+            <p class="venue">IIIT Allahabad</p>
+            <p>ML Decision Tree algorithm design and implementation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="projects">
+        <div class="block-head"><span class="idx">05</span><h3>Projects</h3></div>
+
+        <div class="project-group">
+          <h4>Research Projects</h4>
+          <div class="project-grid">
+            <div class="project-card">
+              <h5>Network Stack &amp; System Tracing with eBPF</h5>
+              <p>Profiled network stack, CPU, and GPU on a 2×RTX / 2×H100 testbed running DDP on ResNet, with and without containerisation, to measure overhead cost.</p>
             </div>
+            <div class="project-card">
+              <h5>Low-Level Decomposition of Collective Primitives</h5>
+              <p>Comparative study of NCCL, MPI collectives, and UCCL; deep dive into NCCL internals using Nsight Compute, Nsight Systems, and CUPTI. Aug 2025–Present.</p>
+            </div>
+            <div class="project-card">
+              <h5>Inference of MoE</h5>
+              <p>Optimization techniques for Mixture-of-Experts inference across DeepSeek, Kimi K2, Llama, and Qwen.</p>
+            </div>
+            <div class="project-card">
+              <h5>Programmable Proxy</h5>
+              <p>A network proxy that reduces latency in a dynamic network between server and client.</p>
+            </div>
+          </div>
+        </div>
 
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+        <div class="project-group">
+          <h4>Development Projects</h4>
+          <div class="project-grid">
+            <div class="project-card">
+              <h5>Full Stack Polling App</h5>
+              <p>Conduct polls, analyse voting patterns, and showcase results, with authentication and security features.</p>
+            </div>
+            <div class="project-card">
+              <h5>Full Stack Note App</h5>
+              <p>TypeScript full-stack app for creating and managing customised notes.</p>
+            </div>
+            <div class="project-card">
+              <h5>Transaction App</h5>
+              <p>Java Spring Boot app built to work with Mojaloop, part of the Mifos Initiative open-source project.</p>
+            </div>
+            <div class="project-card">
+              <h5>Object Recognition App</h5>
+              <p>Mobile app for identifying currency and objects, with voice-to-text for emailing.</p>
+            </div>
+          </div>
+        </div>
 
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
+        <p style="margin-top: 6px; font-size: 0.9rem;">
+          <ion-icon name="logo-github" style="vertical-align: -2px; color: var(--accent);"></ion-icon>
+          More on <a href="https://github.com/PalakMishra-eq" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">github.com/PalakMishra-eq</a>
+        </p>
+      </section>
 
-          </form>
+      <section class="block" id="talks">
+        <div class="block-head"><span class="idx">06</span><h3>Talks &amp; Conferences</h3></div>
 
-        </section>
+        <ul class="plain">
+          <li><strong>Google India Networking Research Summit 2026</strong> — invite-only summit hosted in Bangalore for academic researchers and industry professionals, focused on computer networks, distributed systems, and AI infrastructure.</li>
+          <li><strong>HiPC 2025, Hyderabad</strong> — IEEE 32nd International Conference on High Performance Computing, Data, and Analytics, covering scalable HPC, AI/ML integration, and RISC-V architectures.</li>
+          <li><strong>IBM Research Maitreyi 2025</strong> — IBM Research India's annual STEM forum for mentorship and knowledge-sharing among emerging innovators.</li>
+        </ul>
+      </section>
 
-      </article>
+      <section class="block" id="awards">
+        <div class="block-head"><span class="idx">07</span><h3>Awards &amp; Leadership</h3></div>
 
-    </div>
+        <ul class="plain">
+          <li><strong>Smart India Hackathon</strong> — 2022</li>
+          <li><strong>DSA Certification</strong> — NPTEL</li>
+          <li><strong>CCNA Certification</strong> — Cisco</li>
+          <li><strong>Student Body — Club Head</strong></li>
+          <li><strong>CAT</strong> — 86th percentile</li>
+        </ul>
+      </section>
 
-  </main>
+      <section class="block" id="skills">
+        <div class="block-head"><span class="idx">08</span><h3>Skills &amp; Toolkit</h3></div>
 
+        <div class="skill-group">
+          <h4>Programming</h4>
+          <div class="tag-row">
+            <span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span>
+            <span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">Node.js</span>
+          </div>
+        </div>
 
+        <div class="skill-group">
+          <h4>Frameworks &amp; Systems</h4>
+          <div class="tag-row">
+            <span class="tag">NCCL</span><span class="tag">CUDA</span><span class="tag">CUPTI</span>
+            <span class="tag">NSYS</span><span class="tag">NCU</span><span class="tag">Linux</span>
+            <span class="tag">eBPF</span><span class="tag">eGPU</span><span class="tag">Spring Boot</span>
+            <span class="tag">Networking Protocols</span><span class="tag">SASS / PTX</span>
+          </div>
+        </div>
 
+        <div class="skill-group">
+          <h4>Tools &amp; Platforms</h4>
+          <div class="tag-row">
+            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span><span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">Chakra</span>
+          </div>
+        </div>
 
+        <div class="skill-group">
+          <h4>Databases</h4>
+          <div class="tag-row">
+            <span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">MySQL</span>
+          </div>
+        </div>
 
+        <div class="skill-group">
+          <h4>Graduate Coursework</h4>
+          <div class="tag-row">
+            <span class="tag">Networks for AIML Systems</span><span class="tag">Graduate Algorithms</span>
+            <span class="tag">Graduate Systems</span><span class="tag">IP</span><span class="tag">IS</span>
+          </div>
+        </div>
+      </section>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+      <section class="block contact-block" id="contact">
+        <div class="block-head"><span class="idx">09</span><h3>Contact</h3></div>
+        <p>Always happy to talk systems, networking, or GPU internals — reach out by email or connect on LinkedIn.</p>
 
-  <!--
-    - ionicon link
-  -->
+        <div class="row">
+          <div class="contact-item">
+            <p class="label">Email</p>
+            <a href="mailto:palakm@iiitd.ac.in">palakm@iiitd.ac.in</a>
+          </div>
+          <div class="contact-item">
+            <p class="label">Location</p>
+            <address>New Delhi, India</address>
+          </div>
+          <div class="contact-item">
+            <p class="label">LinkedIn</p>
+            <a href="https://www.linkedin.com/in/palak-mishra-937716192/" target="_blank" rel="noopener">palak-mishra</a>
+          </div>
+          <div class="contact-item">
+            <p class="label">GitHub</p>
+            <a href="https://github.com/PalakMishra-eq" target="_blank" rel="noopener">PalakMishra-eq</a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        Advisor: Dr. Rinku Shah, Assistant Professor, Dept. of Computer Science &amp; Engineering, IIIT Delhi · rinku@iiitd.ac.in
+      </footer>
+
+    </main>
+
+  </div>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Scrollspy: highlight the active section in the sidebar nav
+    const navLinks = document.querySelectorAll('[data-sidenav] a');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = '#' + entry.target.id;
+        const link = document.querySelector(`[data-sidenav] a[href="${id}"]`);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(sec => { if (sec) observer.observe(sec); });
+  </script>
 
 </body>
 
